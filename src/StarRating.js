@@ -6,6 +6,7 @@ const starRatingComponentStyle = {
   borderRadius: "10px",
   fontFamily: "sans-serif",
   textAlign: "center",
+  boxShadow: "5px 5px #ffffff7e",
 };
 
 const heading = {
@@ -33,10 +34,10 @@ const messageStyle = {
 
 export default function StarRating({ maxStars = 5 }) {
   const [rating, setRating] = useState(0);
+  const [isHover, setIsHover] = useState(0);
 
   function handleRating(rating) {
     setRating(rating);
-    console.log(rating);
   }
 
   return (
@@ -48,19 +49,30 @@ export default function StarRating({ maxStars = 5 }) {
         </h2>
         <div style={starContainerStyle}>
           {Array.from({ length: maxStars }, (_, i) => (
-            <Star key={i} onRate={() => handleRating(i + 1)} 
-            full={rating >= i + 1} />
+            <Star
+              key={i}
+              full={isHover ? isHover >= i + 1 : rating >= i + 1}
+              onRate={() => handleRating(i + 1)}
+              onHoverIn={() => setIsHover(i + 1)}
+              onHoverOut={() => setIsHover(0)}
+            />
           ))}
         </div>
-        <Message rating={rating}/>
+        <Message rating={rating} />
       </div>
     </div>
   );
 }
 
-function Star({ onRate, full }) {
+function Star({ onRate, full, onHoverIn, onHoverOut }) {
   return (
-    <span style={starStyle} role="button" onClick={onRate}>
+    <span
+      style={starStyle}
+      role="button"
+      onClick={onRate}
+      onMouseEnter={onHoverIn}
+      onMouseLeave={onHoverOut}
+    >
       {full ? (
         <svg
           width="40"
@@ -86,7 +98,6 @@ function Star({ onRate, full }) {
   );
 }
 
-
 // 1. 5-star rating: Excellent! We're thrilled to hear you had such a positive experience. Thank you for choosing our product/service.
 // 2. 4-star rating: Thank you for your positive feedback! We're glad to know that you had a great experience and we appreciate your support.
 // 3. 3-star rating: Thank you for your feedback. We're sorry to hear that your experience wasn't perfect. We would love to hear more about your concerns to see how we can improve.
@@ -100,9 +111,9 @@ function Message({ rating }) {
     3: "Thank you for your feedback. We're sorry to hear that your experience wasn't perfect. We would love to hear more about your concerns to see how we can improve.",
     4: "Thank you for your positive feedback! We're glad to know that you had a great experience and we appreciate your support.",
     5: "Excellent! We're thrilled to hear you had such a positive experience. Thank you for choosing our product/service.",
-  }
- 
+  };
 
-  return <div style={messageStyle}>{rating ? messages[rating] : "Rate us😊"}</div>; 
+  return (
+    <div style={messageStyle}>{rating ? messages[rating] : "Rate us😊"}</div>
+  );
 }
-   
