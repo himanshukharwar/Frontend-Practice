@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const starRatingComponentStyle = {
-  background: "rgb(239, 239, 239)",
+  background: "#FFFFFF",
   padding: "3rem",
   borderRadius: "10px",
   fontFamily: "sans-serif",
@@ -21,14 +21,14 @@ const starContainerStyle = {
 };
 
 const starStyle = {
-  fill: "rgb(205, 205, 205)",
   margin: "0.5rem",
   display: "inline",
   cursor: "pointer",
 };
 
-const message = {
-  fontSize: "0.8rem",
+const messageStyle = {
+  fontSize: "1rem",
+  width: "30rem",
 };
 
 export default function StarRating({ maxStars = 5 }) {
@@ -52,7 +52,7 @@ export default function StarRating({ maxStars = 5 }) {
             full={rating >= i + 1} />
           ))}
         </div>
-        <Message />
+        <Message rating={rating}/>
       </div>
     </div>
   );
@@ -65,7 +65,7 @@ function Star({ onRate, full }) {
         <svg
           width="40"
           height="40"
-          fill="rgb(255, 204, 0)"
+          fill="#FBCD16"
           // stroke="#000"
           viewBox="0 0 16 16"
         >
@@ -75,7 +75,7 @@ function Star({ onRate, full }) {
         <svg
           width="40"
           height="40"
-          fill="rgb(205, 205, 205)"
+          fill="#E3E8F0"
           // stroke="#000"
           viewBox="0 0 16 16"
         >
@@ -93,6 +93,16 @@ function Star({ onRate, full }) {
 // 4. 2-star rating: We apologize for the inconvenience you experienced. We appreciate your feedback and would like to work with you to address any issues.
 // 5. 1-star rating: We're sorry to hear that you had a bad experience. We would like to learn more about what happened and how we can make things right.
 
-function Message() {
-  return <div styles={message}>MESSAGE</div>;
+function Message({ rating }) {
+  const messages = {
+    1: "We're sorry to hear that you had a bad experience. We would like to learn more about what happened and how we can make things right.",
+    2: "We apologize for the inconvenience you experienced. We appreciate your feedback and would like to work with you to address any issues.",
+    3: "Thank you for your feedback. We're sorry to hear that your experience wasn't perfect. We would love to hear more about your concerns to see how we can improve.",
+    4: "Thank you for your positive feedback! We're glad to know that you had a great experience and we appreciate your support.",
+    5: "Excellent! We're thrilled to hear you had such a positive experience. Thank you for choosing our product/service.",
+  }
+ 
+
+  return <div style={messageStyle}>{rating ? messages[rating] : "Rate us😊"}</div>; 
 }
+   
