@@ -1,9 +1,11 @@
-import StarRating from '../src/components/StarRating'
+// import StarRating from '../src/components/StarRating'
+import NewsletterCard from '../src/components/NewsletterCard'
 
 function App() {
   return (
     <div className="App">
-      <StarRating />
+      {/* <StarRating /> */}
+      <NewsletterCard /> 
     </div>
   );
 }
